@@ -53,6 +53,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         try
         {
             string adoState = "Resolved"; // Default value
+            string adoResolvedReason = "External";
 
             AnsiConsole.MarkupLine($"Getting issue state: {issue.State}");
 
@@ -76,6 +77,12 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
                             Operation = Microsoft.VisualStudio.Services.WebApi.Patch.Operation.Replace,
                             Path = "/fields/System.State",
                             Value = adoState
+                        },
+                        new Microsoft.VisualStudio.Services.WebApi.Patch.Json.JsonPatchOperation
+                        {
+                            Operation = Microsoft.VisualStudio.Services.WebApi.Patch.Operation.Replace,
+                            Path = "/fields/Resolved Reason", // Replace with the actual field name.
+                            Value = adoResolvedReason // Set the resolved reason here.
                         }
                         },
                         Options._ProjectName, workItem.Id!.Value
