@@ -73,7 +73,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
             }
             else
             {
-                AnsiConsole.MarkupLine($"[bold yellow]Status of work item {workItem.ReadableLink()} not updated, as GitHub issue {issue.HtmlUrl} may be missing a triage label.[/]. Work item state: {issue}.");
+                AnsiConsole.MarkupLine($"[bold yellow]Status of work item {workItem.ReadableLink()} not updated, as GitHub issue {issue.HtmlUrl} may be missing a triage label.[/]. Work item state: {issue.toString()}.");
                 return workItem;
             }
         }
