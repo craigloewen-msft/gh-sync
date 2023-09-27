@@ -52,8 +52,21 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
     {
         try
         {
+            string adoState = "Resolved"; // Default value
+
+            AnsiConsole.MarkupLine($"Getting issue state: {issue.State}");
+
             if (issue.State is { } issueState)
             {
+
+                if (issueState.Equals("open", StringComparison.OrdinalIgnoreCase))
+                {
+                    adoState = "Open";
+                }
+
+                AnsiConsole.MarkupLine($"Setting adoState: {adoState}");
+
+
                 return await Ado.WithWorkItemClient(async client =>
                 {
                     return await client.UpdateWorkItemAsync(
@@ -79,8 +92,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         }
         catch (Exception error)
         {
-            AnsiConsole.MarkupLine($"[bold yellow]Error updating state of work item {workItem.ReadableLink()}:[/]");
-            AnsiConsole.MarkupLine($"Error: {error.Message}");
+            AnsiConsole.MarkupLine($"[bold red]Error updating state of work item {workItem.ReadableLink()}:[/]");
             return workItem;
         }
     }
