@@ -59,13 +59,12 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
             if (issue.State is { } issueState)
             {
 
-                if (issueState.Equals("open", StringComparison.OrdinalIgnoreCase))
+                if (issueState == "open" || issueState == "Open" || issueState == "OPEN")
                 {
                     adoState = "Open";
                 }
 
                 AnsiConsole.MarkupLine($"Setting adoState: {adoState}");
-
 
                 return await Ado.WithWorkItemClient(async client =>
                 {
