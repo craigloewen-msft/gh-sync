@@ -79,7 +79,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         }
         catch (Exception error)
         {
-            AnsiConsole.MarkupLine($"[bold red]Error updating state of work item {workItem.ReadableLink()}: {error.Message}[/]");
+            AnsiConsole.MarkupLine($"[bold yellow]Error updating state of work item {workItem.ReadableLink()}: {error.Message}[/]");
             return workItem;
         }
     }
