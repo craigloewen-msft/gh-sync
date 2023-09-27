@@ -50,28 +50,36 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
 
     public async Task<WorkItem> UpdateState(WorkItem workItem, Issue issue)
     {
-        if (issue.WorkItemState() is {} state)
+        try
         {
-            return await Ado.WithWorkItemClient(async client =>
+            if (issue.WorkItemState() is { } state)
             {
-                return await client.UpdateWorkItemAsync(
-                    new Microsoft.VisualStudio.Services.WebApi.Patch.Json.JsonPatchDocument
-                    {
+                return await Ado.WithWorkItemClient(async client =>
+                {
+                    return await client.UpdateWorkItemAsync(
+                        new Microsoft.VisualStudio.Services.WebApi.Patch.Json.JsonPatchDocument
+                        {
                         new Microsoft.VisualStudio.Services.WebApi.Patch.Json.JsonPatchOperation
                         {
                             Operation = Microsoft.VisualStudio.Services.WebApi.Patch.Operation.Replace,
                             Path = "/fields/System.State",
                             Value = state.State
                         }
-                    },
-                    Options._ProjectName, workItem.Id!.Value
-                );
-            });
-            // TODO: update Reason
+                        },
+                        Options._ProjectName, workItem.Id!.Value
+                    );
+                });
+                // TODO: update Reason
+            }
+            else
+            {
+                AnsiConsole.MarkupLine($"[bold yellow]Status of work item {workItem.ReadableLink()} not updated, as GitHub issue {issue.HtmlUrl} may be missing a triage label.[/]");
+                return workItem;
+            }
         }
-        else
+        catch (error)
         {
-            AnsiConsole.MarkupLine($"[bold yellow]Status of work item {workItem.ReadableLink()} not updated, as GitHub issue {issue.HtmlUrl} may be missing a triage label.[/]");
+            AnsiConsole.MarkupLine($"[bold red]Error updating state of work item {workItem.ReadableLink()}: {error.Message}[/]");
             return workItem;
         }
     }
@@ -113,7 +121,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
     {
         if (issue == null) throw new ArgumentNullException(nameof(issue));
         if (issue.Repository == null) throw new NullReferenceException($"Issue {issue.Title} did not have an associated repository.");
-        
+
         var patch = issue.AsPatch();
 
         var newItem = await Ado.WithWorkItemClient(async client =>
@@ -147,7 +155,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         AnsiConsole.MarkupLine($"Added {nCommentsAdded} comments from GitHub issue.");
         return newItem;
     }
-    
+
 
     public async Task PullAllIssues(string repo, bool dryRun, bool allowExisting)
     {
