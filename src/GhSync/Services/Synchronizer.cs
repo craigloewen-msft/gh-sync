@@ -75,7 +75,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
                         {
                             Operation = Microsoft.VisualStudio.Services.WebApi.Patch.Operation.Replace,
                             Path = "/fields/System.State",
-                            Value = issueState
+                            Value = adoState
                         }
                         },
                         Options._ProjectName, workItem.Id!.Value
