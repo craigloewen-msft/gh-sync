@@ -52,7 +52,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
     {
         try
         {
-            if (issue.WorkItemState() is { } state)
+            if (issue.State)
             {
                 return await Ado.WithWorkItemClient(async client =>
                 {
@@ -63,7 +63,7 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
                         {
                             Operation = Microsoft.VisualStudio.Services.WebApi.Patch.Operation.Replace,
                             Path = "/fields/System.State",
-                            Value = state.State
+                            Value = issue.State
                         }
                         },
                         Options._ProjectName, workItem.Id!.Value
