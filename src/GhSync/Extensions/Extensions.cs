@@ -39,6 +39,31 @@ public static class Extensions
         return response;
     }
 
+        internal static string RetreiveOrNull(string key, string prompt, string? envVarName = null)
+    {
+        if (envVarName != null)
+        {
+            var env = Environment.GetEnvironmentVariable(envVarName);
+            if (!string.IsNullOrWhiteSpace(env))
+            {
+                return env;
+            }
+        }
+
+        try
+        {
+            var creds = Registry.GetValue("HKEY_CURRENT_USER\\" + KeyName, key, null);
+            if (creds != null && creds is string value)
+            {
+                return value;
+            }
+        }
+        catch (Exception) {}
+
+        
+        return null; 
+    }
+
     internal static void Invalidate(string key)
     {
         AnsiConsole.MarkupLine($"[[debug]] Invalidating {KeyName}\\{key}.");
