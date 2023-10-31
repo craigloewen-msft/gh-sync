@@ -32,11 +32,7 @@ public class Options : IOptions
         envVarName: "ADO_AREA_PATH"
     );
 
-    internal static readonly string _DefaultAssignedTo = Extensions.RetreiveOrPrompt(
-        DefaultAssignedToName,
-        prompt: "Please provide a default user to assign to, optional: ",
-        envVarName: "ADO_DEFAULT_ASSIGNED_TO"
-    );
+    internal static readonly string _DefaultAssignedTo = "Active"
 
     public string? GetToken(string varName) => varName switch
     {
