@@ -32,7 +32,7 @@ public class Options : IOptions
         envVarName: "ADO_AREA_PATH"
     );
 
-    internal static readonly string _DefaultAssignedTo = "Active"
+    internal static readonly string _DefaultAssignedTo = "Active";
 
     public string? GetToken(string varName) => varName switch
     {
