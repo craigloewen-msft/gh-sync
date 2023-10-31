@@ -155,6 +155,14 @@ public static class Extensions
         {
             yield return ("/fields/System.Title", $"{issue.WorkItemTitle()}");
             yield return ("/fields/System.AreaPath", Options._AreaPath);
+
+            if (Options._DefaultAssignedTo) {
+                yield return ("/fields/System.AssignedTo", Options._DefaultAssignedTo);
+                AnsiConsole.MarkupLine($"[debug] Assigned to: {Options._DefaultAssignedTo}[/]");
+            } else {
+                AnsiConsole.MarkupLine($"[debug] Assigned to noone[/]");
+            }
+
             var htmlBody = issue.Body.MarkdownToHtml();
             var description = $"<h3>Description from <a href=\"{issue.HtmlUrl}\">{issue.Repository.Owner.Login}/{issue.Repository.Name}#{issue.Number}</a> (reported by <a href=\"{issue.User.HtmlUrl}\">@{issue.User.Login}</a>):</h3>\n\n{htmlBody}";
             yield return (

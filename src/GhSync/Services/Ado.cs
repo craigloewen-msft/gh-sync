@@ -14,6 +14,7 @@ public record class Ado(IOptions options) : IAdo
     internal const string ADOTokenName = "ado-token";
     internal const string ADOUriName = "ado-uri";
     internal const string AdoProjectName = "ado-project";
+    internal const string DefaultAssignedToName = "ado-assigned-to";
 
     private static VssConnection? adoConnection = null;
     public async Task<VssConnection> GetAdoConnection(string ADOTokenName, VssConnection? adoConnection)
