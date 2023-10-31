@@ -156,7 +156,7 @@ public static class Extensions
             yield return ("/fields/System.Title", $"{issue.WorkItemTitle()}");
             yield return ("/fields/System.AreaPath", Options._AreaPath);
 
-            if (Options._DefaultAssignedTo) {
+            if (Options._DefaultAssignedTo != null) {
                 yield return ("/fields/System.AssignedTo", Options._DefaultAssignedTo);
                 AnsiConsole.MarkupLine($"[debug] Assigned to: {Options._DefaultAssignedTo}[/]");
             } else {
