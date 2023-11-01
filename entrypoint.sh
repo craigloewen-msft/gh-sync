@@ -7,5 +7,6 @@ export GH_REPO=$4
 export ISSUE_NUM=$5
 export ADO_TOKEN=$6
 export GITHUB_TOKEN=$7
+export ADO_ASSIGNED_TO=$8
 
 dotnet /GhSync.dll pull-gh $GH_REPO $ISSUE_NUM
