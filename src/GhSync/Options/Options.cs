@@ -35,7 +35,7 @@ public class Options : IOptions
     internal static readonly string _DefaultAssignedTo = Extensions.RetreiveOrNull(
         DefaultAssignedToName,
         prompt: "Please provide a default user to assign to, optional: ",
-        envVarName: "ADO_DEFAULT_ASSIGNED_TO"
+        envVarName: "ADO_ASSIGNED_TO"
     );
 
     public string? GetToken(string varName) => varName switch
