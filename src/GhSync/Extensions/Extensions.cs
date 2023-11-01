@@ -183,9 +183,6 @@ public static class Extensions
 
             if (Options._DefaultAssignedTo != null) {
                 yield return ("/fields/System.AssignedTo", Options._DefaultAssignedTo);
-                AnsiConsole.MarkupLine($"[bold yellow] Assigned to: {Options._DefaultAssignedTo}[/]");
-            } else {
-                AnsiConsole.MarkupLine($"[bold yellow] Assigned to noone[/]");
             }
 
             var htmlBody = issue.Body.MarkdownToHtml();
