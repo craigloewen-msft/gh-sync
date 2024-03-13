@@ -87,7 +87,7 @@ public record class GitHub(IOptions Options) : IGitHub
         return await WithClient(async client =>
         {
             AnsiConsole.MarkupLine("[white]Got GitHub client.[/]");
-            AnsiConsole.MarkupLine("[white]Using new octokit logic");
+            AnsiConsole.MarkupLine("[white]Using new octokit logic[/]");
             var repository = await client.Repository.Get(parts[0], parts[1]);
             AnsiConsole.MarkupLine($"[white]Got repository: {repository.HtmlUrl}.[/]");
             var issue = await client.Issue.Get(repositoryId: repository.Id, issueId);
