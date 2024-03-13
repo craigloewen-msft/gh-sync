@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="19.216.0-preview" />
     <PackageReference Include="Microsoft.TeamFoundationServer.ExtendedClient" Version="19.216.0-preview" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.216.0-preview" />
-    <PackageReference Include="Octokit" Version="9.1.2" />
+    <PackageReference Include="Octokit" Version="10.0.0" />
     <PackageReference Include="Spectre.Console" Version="0.41.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
