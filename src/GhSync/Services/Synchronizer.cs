@@ -14,7 +14,8 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         var workItem = await Ado.GetAdoWorkItem(ghIssue);
         if (workItem != null)
         {
-            AnsiConsole.MarkupLine($"Found existing work item: {workItem.ReadableLink()}");
+            var workItemLink = workItem.ReadableLink();
+            AnsiConsole.MarkupLine($"Found existing work item: {workItemLink}");
             if (!allowExisting)
             {
                 AnsiConsole.MarkupLine("Updating existing issue, since --allow-existing was not set.");
@@ -40,7 +41,8 @@ public record class Synchronizer(IAdo Ado, IGitHub GitHub) : ISynchronizer
         {
             var newWorkItem = await PullWorkItemFromIssue(ghIssue);
             await UpdateState(newWorkItem, ghIssue);
-            AnsiConsole.MarkupLine($@"Created new work item: {newWorkItem.ReadableLink()}");
+            var newWorkItemLink = newWorkItem.ReadableLink();
+            AnsiConsole.MarkupLine($@"Created new work item: {newWorkItemLink}");
         }
         else
         {

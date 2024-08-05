@@ -178,7 +178,8 @@ public static class Extensions
     {
         IEnumerable<(string Path, string Value)> Operations()
         {
-            yield return ("/fields/System.Title", $"{issue.WorkItemTitle()}");
+            var quoteRemovedTitle = issue.WorkItemTitle().Replace("\"", "");
+            yield return ("/fields/System.Title", quoteRemovedTitle);
             yield return ("/fields/System.AreaPath", Options._AreaPath);
 
             if (Options._DefaultAssignedTo != null) {
