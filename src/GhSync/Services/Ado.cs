@@ -103,7 +103,13 @@ public record class Ado(IOptions options) : IAdo
         var escapedTitle = issue
             .WorkItemTitle()
             .Replace("\\", @"\\")
-            .Replace("\"", @"\""");
+            .Replace("\"", @"");
+
+        var queryString = $@"
+                            SELECT [System.Id]
+                            FROM WorkItems
+                            WHERE ([Title] = ""{escapedTitle}"")
+                        ";
         try
         {
             var workItems = await WithWorkItemClient(async (client) =>
@@ -111,11 +117,7 @@ public record class Ado(IOptions options) : IAdo
                 return await client.QueryByWiqlAsync(
                     new Wiql
                     {
-                        Query = $@"
-                            SELECT [System.Id]
-                            FROM WorkItems
-                            WHERE ([Title] = ""{escapedTitle}"")
-                        "
+                        Query = queryString,
                     }
                 );
             });
